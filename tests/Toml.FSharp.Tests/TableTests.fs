@@ -1,2 +1,2 @@
-﻿module TomlFs.Tests.TableTests
+﻿module TomlFSharp.Tests.TableTests
 

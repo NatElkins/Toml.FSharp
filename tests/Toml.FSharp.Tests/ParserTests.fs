@@ -7,19 +7,19 @@
 #load   "Prelude.fs"
         "Generators.fs"
 #else
-module TomlFs.Tests.ParserTests
+module TomlFSharp.Tests.ParserTests
 #endif
 
 
 open NUnit.Framework
 open FsCheck
-open FParsec 
-open TomlFs.Prelude
-open TomlFs.Parsers
-open TomlFs.Tests.Prelude
-open TomlFs.Tests.Generators
+open FParsec
+open TomlFSharp.Prelude
+open TomlFSharp.Parsers
+open TomlFSharp.Tests.Prelude
+open TomlFSharp.Tests.Generators
 
-let inline throwConfig maxTest startSize endSize = 
+let inline throwConfig maxTest startSize endSize =
     { Config.QuickThrowOnFailure with MaxTest = maxTest; StartSize = startSize; EndSize = endSize}
 
 let longCheck   x = Check.One (throwConfig 10000 50 700, x)
@@ -33,11 +33,11 @@ let shortCheck  x = Check.One (throwConfig 500   5  100, x)
 
 
 let parserTest bound parser  =
-    fun (str:string) -> 
+    fun (str:string) ->
         (str.Length > bound) ==>
             match parseString parser str with
             | ParserResult.Success(_,_,_) -> true
-            | ParserResult.Failure(_,_,_) -> false 
+            | ParserResult.Failure(_,_,_) -> false
 
 let stringParser psr = parserTest 6 psr
 
@@ -47,7 +47,7 @@ let [<Test>] ``parses all basic strings`` () =
 
 let [<Test>] ``parses all multi strings`` () =
     longCheck <| Prop.forAll multi_string_arb (stringParser multi_string)
-    
+
 
 let [<Test>] ``parses all literal strings`` () =
     longCheck <| Prop.forAll literal_string_arb (stringParser literal_string)
@@ -119,25 +119,25 @@ let [<Test>] ``parses toml items (key value pairs)`` () =
 let stringTests      = false
 let simpleValueTests = false
 
-if stringTests then 
+if stringTests then
     ``parses all basic strings`` ()
     ``parses all multi strings`` ()
     ``parses all literal strings`` ()
-    ``parses all multi literal strings`` () 
+    ``parses all multi literal strings`` ()
     ``unified string parser reads all toml string types`` ()
 
 if simpleValueTests then
     ``parses all ints`` ()
     ``parses all floats`` ()
-    ``parses bools`` () 
+    ``parses bools`` ()
     ``parses all DateTimes``()
     ``parses all Arrays`` ()
 
 
 ``parses keys for table elements `` ()
 ``parses bare table keys`` ()
-``parses quote table keys`` () 
-``parses toml keys`` () 
+``parses quote table keys`` ()
+``parses toml keys`` ()
 ``parses toml items (key value pairs)`` ()
 #endif
 
