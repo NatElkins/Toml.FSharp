@@ -5,14 +5,14 @@
       "AST.fs"
       "Parsers.fs"
 
-open System 
+open System
 open FParsec
 open TomlFSharp.Prelude
 open TomlFSharp.AST
 open TomlFSharp.Parsers
 
 
-[<AutoOpen>] 
+[<AutoOpen>]
 module  basicdata =
     let date1 = "1979-05-27T07:32:00Z"
     let date2 = "1979-05-27T00:32:00-07:00"
@@ -21,11 +21,11 @@ module  basicdata =
     let date5 = "1979-05-27T00:32:00.999999"
     let date6 = "1979-05-27"
 
-    let int0 = "1_000"  
-    let int1 = "5_349_221" 
-    let int2 = "1_2_3_4_5" 
-    let int3 = "0_2_3_4_5" 
-    let int4 = "72345" 
+    let int0 = "1_000"
+    let int1 = "5_349_221"
+    let int2 = "1_2_3_4_5"
+    let int3 = "0_2_3_4_5"
+    let int4 = "72345"
 
     let flt0 = "9._224_617  .445_991_228_313"
     let flt1 = "+1.0"
@@ -43,12 +43,12 @@ dob = 1979-05-27T07:32:00-08:00 # First class dates
 
 let table1="""[database]
 connection_max = 5000
-server = "192.168.1.1"   
+server = "192.168.1.1"
 ports = [ 8001, 8001, 8002 ]
 enabled = true
 """
 
-[<AutoOpen>] 
+[<AutoOpen>]
 module  toml_samples =
     let toml0 = """
 
@@ -196,7 +196,7 @@ module  toml_samples =
         another_test_string = " Same thing, but with a string #"
         harder_test_string = " And when \"'s are in the string, along with # \""   # "and comments are there too"
         # Things will get harder
-    
+
             [the.hard.bit#]
             what? = "You don't think some user won't do that?"
             multi_line_array = [
@@ -229,7 +229,7 @@ module  toml_samples =
     """
 
     let toml6 = """
-    
+
       [[products]]
       name = "Hammer"
       sku = 738594937
@@ -254,7 +254,7 @@ let prun psr str = run psr str |> printfn "%A"
 let parseString parser str = runParserOnString parser () "toml parser test" str;;
 
 
-[<AutoOpen>] 
+[<AutoOpen>]
 module simple_tests =
     let runtests = false
 
@@ -263,7 +263,7 @@ module simple_tests =
             int1
             int2
             int3
-            int4    ]    
+            int4    ]
         |> List.iter (prun pInt64_toml)
 
         [   flt0
@@ -282,11 +282,11 @@ module simple_tests =
             date3
             date4
             date5
-            date6   ] 
+            date6   ]
         |> List.iter (prun pDateTime_toml)
 ;;
 
-[<AutoOpen>] 
+[<AutoOpen>]
 module complex_tests =
     let run_complex = true
 
@@ -294,11 +294,11 @@ module complex_tests =
         prun toml_inlineTable  "{ one = 1, two = 2, three = 3}"
         prun toml_string "\"hello\""
         prun toml_array  "[   \"hello\", \"watup\", \"yo\" ] "
-        prun toml_array """[ [1,2,3], [1.0,2.0,3.0], ["a","b","c"], ]""" 
-        prun toml_array  "[ 22.04 , 234.00, 23_4.304]" 
-        prun toml_array "[ { x = 1, y = 2, z = 3 }, { x = 7, y = 8, z = 9 }, { x = 2, y = 4, z = 8 } ]" 
-       // prun parse_toml_table table0 
-      //  prun parse_toml_table table1 
+        prun toml_array """[ [1,2,3], [1.0,2.0,3.0], ["a","b","c"], ]"""
+        prun toml_array  "[ 22.04 , 234.00, 23_4.304]"
+        prun toml_array "[ { x = 1, y = 2, z = 3 }, { x = 7, y = 8, z = 9 }, { x = 2, y = 4, z = 8 } ]"
+       // prun parse_toml_table table0
+      //  prun parse_toml_table table1
         ;;
 
 
@@ -310,8 +310,8 @@ module complex_tests =
 //    toml2
 //    toml3
 //    toml4
-//    toml5   
-//    toml6   
+//    toml5
+//    toml6
 //] |> fun x ->
 //    x |> List.iter (prun parse_to_print)
 //    x |> List.iter (prun parse_toml_table)
@@ -323,9 +323,9 @@ prun parse_toml_table toml1;;
 prun parse_toml_table toml2;;
 prun parse_toml_table toml3;;
 prun parse_toml_table toml4;;
-prun parse_toml_table toml5;; 
-prun parse_toml_table toml6;; 
-        
+prun parse_toml_table toml5;;
+prun parse_toml_table toml6;;
+
 
 //parseString basic_string "\"\\rline1\\nline2\\nline3\\rline4\"";;
 

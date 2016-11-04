@@ -13,7 +13,7 @@ open TomlFSharp.Parsers
 
 type DebugType =
     | None | PdbOnly | Full
-type Net  = V_4_5 | V4_5_1 | V4_6 | V4_6_1 | V4_6_2 
+type Net  = V_4_5 | V4_5_1 | V4_6 | V4_6_1 | V4_6_2
 type NetcoreApp  = V1_0
 type NetStandard =  V1_0 | V1_1 | V1_2 | V1_3 | V1_4 | V1_5 | V1_6
 
@@ -41,13 +41,13 @@ let parsetoml filepath =
     | ParserResult.Failure(a,b,c) -> failwithf "%s" a
     | ParserResult.Success(res,_,_) -> res
 
-let prunfile psr filepath =  
+let prunfile psr filepath =
     runParserOnFile psr () filepath (System.Text.UTF8Encoding.UTF8)
     |> printfn "%A"
 ;;
-prunfile parse_toml_table "testproject.toml"    
+prunfile parse_toml_table "testproject.toml"
 ;;
-let tbl = parsetoml "testproject.toml" ;;   
+let tbl = parsetoml "testproject.toml" ;;
 
 tbl.SubTables() |> Seq.iter(printfn "%A");;
 
